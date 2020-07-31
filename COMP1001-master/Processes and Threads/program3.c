@@ -1,3 +1,10 @@
+/*
+------------------DR VASILIOS KELEFOURAS-----------------------------------------------------
+------------------COMP1001 ------------------------------------------------------------------
+------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
+------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
+*/
+
 //compile using gcc program3.c -o program3
 
 #include <stdio.h>

@@ -1,3 +1,10 @@
+/*
+------------------DR VASILIOS KELEFOURAS-----------------------------------------------------
+------------------COMP1001 ------------------------------------------------------------------
+------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
+------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
+*/
+
 //COMPILE WITH gcc phtreads_introduction.c -o p -lpthread
 
 

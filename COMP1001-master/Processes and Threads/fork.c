@@ -1,3 +1,10 @@
+/*
+------------------DR VASILIOS KELEFOURAS-----------------------------------------------------
+------------------COMP1001 ------------------------------------------------------------------
+------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
+------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
+*/
+
  
 /*
 The fork system call allows us to clone a process. When fork() is called, the operating system creates a new clone process, i.e., a process creates a copy of itself. As soon as the fork call returns, both the parent and child are now running at the same point in the program. The only difference is that the child gets a different return value from fork. The parent gets the procsss ID of the child that was just created. The child gets a return of 0. If fork returns -1 then the operating system was unable to create the process. 

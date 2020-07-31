@@ -12,7 +12,7 @@ ExitProcess PROTO, dwExitCode: DWORD  ; Exit process prototype
 						; for holding its value. 
 	message BYTE "Welcome to Assembly Programming.", 0Dh, 0Ah
 			BYTE "This is an", 0Dh
-			BYTE "interesting piece of code!", 0Dh, 0Ah, 0 ; see seminar 6 for example.
+			BYTE "interesting piece of code!", 0Dh, 0Ah, 0 
 	aVariable BYTE ?
 
 .code ; code segment

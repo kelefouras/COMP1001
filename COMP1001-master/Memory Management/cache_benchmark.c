@@ -1,17 +1,29 @@
+/*
+------------------DR VASILIOS KELEFOURAS-----------------------------------------------------
+------------------COMP1001 ------------------------------------------------------------------
+------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
+------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
+*/
 
+// compile with : gcc cache_benchmark.c -o p -D_GNU_SOURCE  -g  -pthread 
 
 #include <stdio.h>	/* for printf */
 #include <stdint.h>	/* for uint64 definition */
 #include <stdlib.h>	/* for exit() definition */
 #include <time.h>	/* for clock_gettime */
 #include <unistd.h> //for sleep
+#include <pthread.h>
 
+#define N 1000
+
+#define TIMES 1000
+
+int X[N];
 
 
 #define BILLION 1000000000L
 
-long int do_something();
-void do_something_else();
+void cache_benchmark();
 
 int main( )
 {
@@ -20,11 +32,18 @@ int main( )
 	int i;
         long int output;
 
+        //the following code binds this thread to code number 0. Without this code, the OS will tongle the thread among the cores, to reduce heat dissipation
+	cpu_set_t mask;
+	CPU_ZERO(&mask);
+	CPU_SET(0,&mask);
+	if(sched_setaffinity(0,sizeof(mask),&mask) == -1)
+          printf("WARNING: Could not set CPU Affinity, continuing...\n");
+
+
 	/* measure monotonic time */
 	clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
 
-	//do_something_else();
-	output=do_something();
+	cache_benchmark();
 
 	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
 
@@ -35,8 +54,7 @@ int main( )
 	/* the time spent sleeping will not count (but there is a bit of overhead */
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
 
-	 //do_something_else();
-	output=do_something();
+	cache_benchmark();
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
 
@@ -47,25 +65,19 @@ int main( )
 }
 
 
-long int do_something(){
+void cache_benchmark(){
 
-int i;
-long int tmp=0;
+int i,j;
 
-
-for (i=0;i<1000000;i++){
- if (i%3==0)
-	tmp+=i;
- else tmp+=(i+1)*3;
+ for (i=0; i<TIMES; i++)
+  for (j=0; j<N; j++){
+   X[j]=i;
 }
  
 
+
 }
 
-void do_something_else(){
-
-sleep(1);
-}
 
 
 
