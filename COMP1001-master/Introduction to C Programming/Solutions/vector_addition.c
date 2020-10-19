@@ -7,6 +7,7 @@
 
 
 #include <stdio.h>
+#include <windows.h> //this library is needed for pause() function
 
 #define N 4
 

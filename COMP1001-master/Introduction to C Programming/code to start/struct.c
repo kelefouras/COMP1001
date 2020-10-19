@@ -6,6 +6,7 @@
 */
 
 #include<stdio.h> 
+#include <windows.h> //this library is needed for pause() function
   
 struct Datetime //this is how a struct is declared. Structure members cannot be initialized here (when a datatype is declared, no memory is allocated for it. Memory is allocated only when variables are created.). 
 { 

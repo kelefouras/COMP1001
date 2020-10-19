@@ -2,7 +2,7 @@
 
 #include <stdio.h> //this library is needed for printf function
 #include <stdlib.h> //this library is needed for rand() function
-
+#include <windows.h> //this library is needed for pause() function
 
 #define N 10 //the compiler will copy paste 20 where N is. 
 

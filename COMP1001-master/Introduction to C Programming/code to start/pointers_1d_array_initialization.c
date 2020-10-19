@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h> //this library is needed for printf function
+#include <windows.h> //this library is needed for pause() function
 
 #define N 20 //the compiler will copy paste 20 where N is. 
 

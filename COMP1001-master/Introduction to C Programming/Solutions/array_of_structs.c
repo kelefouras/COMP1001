@@ -7,7 +7,7 @@
 
 #include<stdio.h>
 #include<string.h>
-
+#include <windows.h> //this library is needed for pause() function
 #define N 2
 
 struct student

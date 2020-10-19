@@ -6,6 +6,8 @@
 */
 
 #include <stdio.h>
+#include <windows.h> //this library is needed for pause() function
+
 
 int main()
 {
@@ -17,6 +19,7 @@ int main()
 
     printf("\nYour name is %s\n", name);
 
+system("pause"); //this command does not let the output window to close
     return 0;
 
 }

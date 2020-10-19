@@ -5,6 +5,7 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 #include <stdio.h>
+#include <windows.h> //this library is needed for pause() function
 
 int main()
 {
@@ -16,6 +17,7 @@ int main()
 
     printf("\nYour name is %s\n", name);
 
+system("pause");
     return 0;
 
 }

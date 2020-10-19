@@ -7,7 +7,7 @@
 
 #include <stdio.h> //needed for printf
 #include <string.h> //needed for strlen()
-
+#include <windows.h> //this library is needed for pause() function
 void approach1();
 void approach2();
 
