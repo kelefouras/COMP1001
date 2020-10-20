@@ -6,11 +6,11 @@
 */
 
 #include <Windows.h>
+#include "array_addition.h"
 #include "MVM.h"
-#include "MMM.h"
-#include "if_cond.h"
+#include "array_constant_addition.h"
 
-#define TIMES_TO_RUN 1 //how many times the function will run
+#define TIMES_TO_RUN 100 //how many times the function will run
 
 void print_message(char *s, unsigned short int outcome);
 
@@ -22,7 +22,7 @@ char message[20];
 int main() {
 
 	unsigned short int output;
-
+	int t;
 	//the following command pins the current process to the 1st core
 	//otherwise, the OS tongles this process between different cores
 	BOOL success = SetProcessAffinityMask(GetCurrentProcess(), 1);
@@ -34,9 +34,8 @@ int main() {
 	}
 
 	//initialize the arrays
-	MVM_init();
-	MMM_init();
-	if_cond_init();
+	initialization_Add();
+	initialization_ConstAdd();
 
 	//define the timers measuring execution time
 	clock_t start_1, end_1; //ignore this for  now
@@ -48,19 +47,19 @@ int main() {
 	//The execution time needs to be at least some seconds in order to have a good measurement (why?) 
 	//			because other processes run at the same time too, preempting our thread
 	//---Appropriately MODIFY the 'TIMES_TO_RUN' and the input size (defined in the appropriate header file)---
-	for (int t = 0; t < TIMES_TO_RUN; t++) {
+	for (t = 0; t < TIMES_TO_RUN; t++) {
+
+		//output = ConstAdd_default();
+		//output = ConstAdd_SSE();
+		//output = ConstAdd_AVX();
+
+		//output = Add_default();
+		output = Add_SSE();
+		//output = Add_AVX();
 
 		//output=MVM_default();
-		output=MVM_SSE();
+		//output = MVM_SSE();
 		//output=MVM_AVX();
-
-		//output=MMM_default();
-		//output=MMM_SSE();
-		//output=MMM_AVX();
-
-		//output=if_cond_default();
-		//output = if_cond_SSE();
-		//output = if_cond_AVX();
 
 	}
 
@@ -70,20 +69,21 @@ int main() {
 	end_1 = clock(); //end the timer - ignore this for now
 
 	if (output == 1) {
-		snprintf(message, sizeof(message) - 1, "MVM Program");
+		snprintf(message, sizeof(message) - 1, "MVM");
 		print_message(message, Compare_MVM());
 	}
 	else if (output == 0) {
-		snprintf(message, sizeof(message) - 1, "MMM program");
-		print_message(message, Compare_MMM());
+		snprintf(message, sizeof(message) - 1, "Array Addition");
+		print_message(message, Compare_Add());
 	}
 	else if (output == 2) {
-		snprintf(message, sizeof(message) - 1, "If condition program");
-		print_message(message, Compare_if_cond());
+		snprintf(message, sizeof(message) - 1, "Array Constant Addition");
+		print_message(message, Compare_ConstAdd());
 	}
 	else {
 		printf("\n Error\n");
 	}
+
 
 	printf(" clock() method: %ldms\n", (end_1 - start_1) / (CLOCKS_PER_SEC / 1000));
 	//std::chrono::duration<double> elapsed = finish - start;
