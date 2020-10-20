@@ -26,10 +26,12 @@ int main() {
 
 void approach1(){
 
-int i;
+int i=0;
 
-    for (i = 0; s[i] != '\0'; i++)
+    while ( s[i] != '\0'){
      printf("\nThe element number %d is %c", i,s[i] );
+     i++;
+    }
 
     printf("\n\nThe total number of elements is %d\n", i );
 
