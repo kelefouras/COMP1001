@@ -10,7 +10,7 @@
 
 //MVM initialization 
 #define M3 1024
-static float  X[M3], Y[M3], test1[M3], A1[M3][M3]; //use static as they must be visible only in MVM.cpp file
+
 
 void initialization_MVM();
 

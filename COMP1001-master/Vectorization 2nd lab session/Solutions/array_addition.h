@@ -11,7 +11,7 @@
 
 //initialization 
 #define M2 10000000
-static float  X1[M2], X2[M2], Y1[M2], test2[M2]; //use static as they must be visible only in array_addition.cpp file
+
 
 void initialization_Add();
 

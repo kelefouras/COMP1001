@@ -1,5 +1,7 @@
 #include "array_addition.h"
 
+float  X1[M2], X2[M2], Y1[M2], test2[M2];
+
 void initialization_Add() {
 
 	float e = 0.1234f, p = 0.7264f, r = 0.11f;
