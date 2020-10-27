@@ -1,5 +1,7 @@
 #include "array_constant_addition.h"
 
+float  V1[M], V2[M], test3[M]; 
+
 void initialization_ConstAdd() {
 
 	float e = 0.1234f, p = 0.7264f, r = 0.11f; //the f after the number specifies that the literal is a float. Otherwise, a double is assumed
