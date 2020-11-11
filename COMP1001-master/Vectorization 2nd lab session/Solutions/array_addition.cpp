@@ -41,6 +41,26 @@ unsigned short int Add_SSE() {
 }
 
 
+unsigned short int Add_SSE_all_sizes() {
+
+	__m128 num1, num2, num3;
+
+	for (int i = 0; i < (M2/4)*4; i += 4) { //e.g., if M2==10, then ((10/4)*4)=8 as the division is between integers
+		num1 = _mm_loadu_ps(&X1[i]); //load 4 elements of X1[]
+		num2 = _mm_loadu_ps(&X2[i]); //load 4 elements of X2[]
+		num3 = _mm_add_ps(num1, num2); //num3 = num1 + num2
+		_mm_storeu_ps(&Y1[i], num3); //store num3 to Y[i]. num3 has 4 FP values which they are stored into Y[i], Y[i+1], Y[i+2], Y[i+3], respectively
+	}
+
+	//padding code
+	for ((M2/4)*4; i < M2; i++) { //equivalently you could write 'for ( ; i < M2; i++)'
+	  Y1[j] = X1[j] + X2[j];
+	}
+
+
+	return 0;
+}
+
 unsigned short int Add_AVX() {
 
 	__m256  ymm1, ymm2, ymm3;
@@ -56,6 +76,26 @@ unsigned short int Add_AVX() {
 	return 0;
 }
 
+
+unsigned short int Add_AVX_all_sizes() {
+
+	__m256  ymm1, ymm2, ymm3;
+
+	for (int i = 0; i < (M2/8)*8; i += 8) { //e.g., if M2==10, then ((10/8)*8)=8 as the division is between integers
+		ymm1 = _mm256_loadu_ps(&X1[i]); //load 8 elements of X1[]
+		ymm2 = _mm256_loadu_ps(&X2[i]); //load 8 elements of X2[]
+		ymm3 = _mm256_add_ps(ymm1, ymm2); //num3 = num1 + num2
+		_mm256_storeu_ps(&Y1[i], ymm3); //store num3 to Y[i]. num3 has 8 FP values which they are stored into Y[i], Y[i+1], Y[i+2], Y[i+3], .. Y[i+7]
+	}
+
+	//padding code
+	for ((M2/8)*8; i < M2; i++) { //equivalently you could write 'for ( ; i < M2; i++)'
+	  Y1[j] = X1[j] + X2[j];
+	}
+
+
+	return 0;
+}
 
 
 

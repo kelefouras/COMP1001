@@ -43,6 +43,27 @@ unsigned short int ConstAdd_SSE() {
 	return 2;
 }
 
+unsigned short int ConstAdd_SSE_all_sizes() {
+
+	__m128 num1, num2, num3;
+	int i;
+
+	num1 = _mm_set_ps(2.1234f, 2.1234f, 2.1234f, 2.1234f); //set num1 values
+
+	for (i = 0; i < (M/4)*4; i += 4) { //e.g., if M==10, then ((10/4)*4)=8 as the division is between integers
+		num2 = _mm_loadu_ps(&V2[i]); //load 4 elements of V2[]
+		num3 = _mm_add_ps(num1, num2); //num3 = num1 + num2
+		_mm_storeu_ps(&V1[i], num3); //store num3 to Y[i]. num3 has 4 FP values which they are stored into Y[i], Y[i+1], Y[i+2], Y[i+3], respectively
+	}
+
+	//padding code
+	for ((M/4)*4; i < M; i++) { //equivalently you could write 'for ( ; i < M; i++)'
+	V1[i] = V2[i] + 2.1234f;
+	}
+
+	return 2;
+}
+
 
 unsigned short int ConstAdd_AVX() {
 
@@ -60,6 +81,27 @@ unsigned short int ConstAdd_AVX() {
 	return 2;
 }
 
+
+unsigned short int ConstAdd_AVX_all_sizes() {
+
+	__m256  ymm1, ymm2, ymm3;
+	int i;
+
+	ymm1 = _mm256_set_ps(2.1234f, 2.1234f, 2.1234f, 2.1234f, 2.1234f, 2.1234f, 2.1234f, 2.1234f); //set num1 values
+	for (i = 0; i < (M/8)*8; i += 8) { //e.g., if M==10, then ((10/8)*8)=8 as the division is between integers
+		ymm2 = _mm256_loadu_ps(&V2[i]); //load 8 elements of X2[]
+		ymm3 = _mm256_add_ps(ymm1, ymm2); //num3 = num1 + num2
+		_mm256_storeu_ps(&V1[i], ymm3); //store num3 to Y[i]. num3 has 8 FP values which they are stored into Y[i], Y[i+1], Y[i+2], Y[i+3], .. Y[i+7]
+	}
+
+	//padding code
+	for ((M/8)*8; i < M; i++) { //equivalently you could write 'for ( ; i < M; i++)'
+	V1[i] = V2[i] + 2.1234f;
+	}
+
+
+	return 2;
+}
 
 unsigned short int Compare_ConstAdd() {
 	int j;
