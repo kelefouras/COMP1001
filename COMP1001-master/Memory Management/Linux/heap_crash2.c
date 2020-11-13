@@ -4,6 +4,10 @@
 ------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
+
+//compile with gcc heap_crash2.c -o p
+//run with ./exec
+
 #include<stdio.h> 
 #include <stdlib.h> //for malloc
   
@@ -18,7 +22,7 @@ printf("\nHi before crashing the heap\n");
 
 heap_crash();    
 
-printf("\nIt looks like the head did not crash\n");
+printf("\nIt looks like the head did not crash. Put an extra zero in N\n");
 
 return 0;
 } 
@@ -26,7 +30,7 @@ return 0;
 void heap_crash(){
 
 
-    int *ptr = (int *)malloc(sizeof(int)*N);  //try allocate this amount of memory
+    int *ptr = (int *)malloc(sizeof(int)*N);  //try to allocate N*4 bytes of memory
     if (ptr == NULL) { // Check if the memory has been successfully allocated by malloc or not 
         printf("\nMemory not allocated.\n"); 
         exit(0); 

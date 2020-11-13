@@ -5,6 +5,9 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 
+//compile with 'gcc calloc.c -o exec 
+//run with ./exec
+
 #include <stdio.h> 
 #include <stdlib.h> //this library allows for malloc to run
  

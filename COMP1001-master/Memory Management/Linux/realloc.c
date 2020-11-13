@@ -5,6 +5,8 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 
+//compile with gcc realloc.c -o exec
+
 #include <stdio.h>   //needed for printf
 #include <stdlib.h> //needed for malloc, calloc, realloc, free
   
@@ -12,7 +14,7 @@ int main()
 { 
   
 
-    int* ptr; // This pointer will hold the  base address of the block created 
+    int* ptr; // This pointer will hold the memory address of the block to be created 
     int n; //initial array size 
     int i; 
   
@@ -21,10 +23,10 @@ int main()
     printf("\nThe array size is: %d\n", n); 
   
     // Dynamically allocate memory using calloc() 
-    ptr = (int*)calloc(n, sizeof(int)); 
+    ptr = calloc(n, sizeof(int)); 
   
     // Check if the memory has been successfully 
-    // allocated by malloc or not 
+    // allocated by calloc or not 
     if (ptr == NULL) { 
         printf("\nMemory not allocated.\n"); 
         exit(0); 
@@ -34,14 +36,14 @@ int main()
         // Memory has been successfully allocated 
         printf("\nMemory successfully allocated using calloc.\n"); 
   
-        // Get the elements of the array 
-        for (i = 0; i < n; ++i) { 
+        // initialize the array 
+        for (i = 0; i < n; i++) { 
             ptr[i] = i; 
         } 
   
         // Print the elements of the array 
         printf("\nThe elements of the array are: "); 
-        for (i = 0; i < n; ++i) { 
+        for (i = 0; i < n; i++) { 
             printf("%d, ", ptr[i]); 
         } 
   

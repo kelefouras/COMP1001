@@ -5,6 +5,9 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 
+//compile with: gcc stack_heap.c -o exec
+//run with: ./exec
+
 #include <stdio.h> 
 #include <stdlib.h> //this library allows for malloc to run
  
@@ -39,7 +42,7 @@ int main()
 
     printf("\nThe number of elements is: %d\n", n); 
    
-    ptr = (int*)malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
+    ptr = malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
   
    
     

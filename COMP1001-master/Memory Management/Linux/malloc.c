@@ -4,6 +4,8 @@
 ------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
+//compile with gcc malloc.c -o exec
+//run with ./exec
 
 #include <stdio.h> 
 #include <stdlib.h> //this library allows for malloc to run
@@ -22,9 +24,6 @@ int main()
     printf("\nThe number of elements is: %d\n", n); 
    
     ptr = (int*)malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
-  
-    
-    
     if (ptr == NULL) { // Check if the memory has been successfully allocated by malloc or not 
         printf("\nMemory not allocated.\n"); 
         exit(0); 

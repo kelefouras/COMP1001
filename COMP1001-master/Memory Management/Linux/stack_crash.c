@@ -4,6 +4,11 @@
 ------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
+
+//compile with: gcc stack_crash.c -o exec
+//run with: ./exec
+
+
 #include<stdio.h> 
   
 #define N 2000
@@ -13,11 +18,11 @@ void stack_crash();
 int main() 
 { 
 
-printf("\nHi before crash the heap\n");
+printf("\nHi before the heap is crashed\n");
 
 stack_crash();    
 
-printf("\n\nIt looks like the head did not crash\n");
+printf("\n\nIt looks like the head did not crash. Use a larger N size\n");
 
 return 0;
 } 
