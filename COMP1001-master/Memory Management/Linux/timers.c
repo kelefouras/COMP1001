@@ -43,8 +43,8 @@ int main( )
 	/* the time spent sleeping will not count (but there is a bit of overhead */
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);	/* mark start time */
 
-	 //do_something_else();
-	output=do_something();
+	 do_something_else();
+	//output=do_something();
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);		/* mark the end time */
 
@@ -67,7 +67,7 @@ for (i=0;i<1000000;i++){
  else tmp+=(i+1)*3;
 }
  
-
+return tmp;
 }
 
 void do_something_else(){
