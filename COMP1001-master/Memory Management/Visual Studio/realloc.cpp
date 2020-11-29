@@ -22,7 +22,7 @@ int main()
     printf("\nThe array size is: %d\n", n); 
   
     // Dynamically allocate memory using calloc() 
-    ptr = calloc(n, sizeof(int)); 
+    ptr = (int*)calloc(n, sizeof(int)); 
   
     // Check if the memory has been successfully 
     // allocated by calloc or not 
@@ -51,7 +51,7 @@ int main()
         printf("\n\nThe new size of the array is: %d\n", n); 
   
         // Dynamically re-allocate memory using realloc() - re-allocation of memory maintains the already present value and new blocks will be initialized with default garbage value.
-        ptr = realloc(ptr, n * sizeof(int)); 
+        ptr = (int*) realloc(ptr, n * sizeof(int)); 
         if (ptr == NULL) { 
         printf("\nMemory not allocated.\n"); 
         exit(0); 
