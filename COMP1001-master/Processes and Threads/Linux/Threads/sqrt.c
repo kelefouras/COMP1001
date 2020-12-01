@@ -16,19 +16,19 @@
 #include <stdint.h>	/* for uint64 definition */
 
 
-#define NUM_THREADS 4 //NUMBER OF THREADS USED
+#define NUM_THREADS 4 //NUMBER OF THREADS USED. In this example, this value must perfectly divide N
 
 #define N 10000000 // INPUT SIZE
 
-#define ITERATIONS 1
+#define ITERATIONS 1 
 
 #define BILLION 1000000000L
 
-float test1[N], X[N], Y[N];
+double test1[N], X[N], Y[N];
 
 
 void initialization();
-unsigned short int equal(float const a, float const b);
+unsigned short int equal(double const a, double const b);
 unsigned short int Compare_sqrt();
 void *sqrt_funct(void* rank);
 
@@ -38,35 +38,37 @@ void *sqrt_funct(void* rank);
 
 int main( ) {
 
-   long thread;
-   pthread_t* thread_handles;
+   long int thread_num;//this variable will be used to pass the thread number to each thread
 
-   struct timespec start, end; //timers
+   pthread_t thread_handles[NUM_THREADS]; //this is an array of threads
+
+   struct timespec start, end; //the timers to measure the execution time of the program
    uint64_t diff;
 
-   thread_handles = malloc(NUM_THREADS * sizeof(pthread_t)); //dynamicaly allocate the thread ids
 
-   initialization();
+   initialization(); //initialize the arrays
 
 	/* measure monotonic time */
    clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
 
-for (int iter=0; iter< ITERATIONS; iter++){ //run this many times to get an accurate measurement
+for (int iter=0; iter< ITERATIONS; iter++){ //This loop is needed just to get an accurate execution time. To get an accurate execution time time of a multi-threaded application, the execution time must be at least 10 secs. 
 
-   for (thread = 0; thread < NUM_THREADS; thread++) 
-      pthread_create(&thread_handles[thread], NULL, sqrt_funct, (void*) thread); //create and run the threads
 
-   for (thread = 0; thread < NUM_THREADS; thread++)
-      pthread_join(thread_handles[thread], NULL); //wait for the threads to finish
+   for (thread_num = 0; thread_num < NUM_THREADS; thread_num++) //for each thread do
+      pthread_create(&thread_handles[thread_num], NULL, sqrt_funct, (void*) thread_num); //create and run the thread. The thread will run the sqrt_funct(). The thread_num will be passed as input to the sqrt_funct().
+
+
+   for (thread_num = 0; thread_num < NUM_THREADS; thread_num++) //for each thread do
+      pthread_join(thread_handles[thread_num], NULL); //wait for the thread to finish
+
 }
 
    clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
 
-	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec; 
+	printf("elapsed time = %llu mseconds\n", (long long unsigned int) diff/1000000);
 
 
-   free(thread_handles); //free the array allocated with malloc
 
 
    if (Compare_sqrt() == 0) //this function checks whether the result is correct or not
@@ -83,7 +85,7 @@ for (int iter=0; iter< ITERATIONS; iter++){ //run this many times to get an accu
 
 void initialization() {
 
-	float e = 0.1234, p = 0.7264, r = 0.11;
+	double r = 0.1156;
 
 
 	for (unsigned int j = 0; j != N; j++) {
@@ -110,8 +112,8 @@ unsigned short int Compare_sqrt() {
 	return 0; //success
 }
 
-unsigned short int equal(float const a, float const b) {
-	float temp = a - b;
+unsigned short int equal(double const a, double const b) {
+	double temp = a - b;
 	//printf("\n %f  %f", a, b);
 	if (fabs(temp) < EPSILON)
 		return 0; //success
@@ -121,17 +123,17 @@ unsigned short int equal(float const a, float const b) {
 
 
 
-void *sqrt_funct (void* rank) {
+void *sqrt_funct (void* thread_num) { //this function will run by all the threads. SINGLE PROGRAM MULTIPLE DATA
 
-   long my_rank = (long) rank;
+   long int my_thread_num = (long int ) thread_num; //store the input of the function to my_thread_num
    int i, j;
 
-   int local = N/NUM_THREADS; 
+   int local = N/NUM_THREADS; //the number of array elements that each thread must compute their sqrt
 
-   int starting_row = my_rank * local;
-   int ending_row = starting_row + local - 1;
+   int starting_element = my_thread_num * local; //first array element to be computed by this thread
+   int ending_element = starting_element + local - 1; //last array element to be computed by this thread
 
-   for (i = starting_row; i <= ending_row; i++) {   
+   for (i = starting_element; i <= ending_element; i++) {   
           Y[i] = sqrt ( X[i] );
    }
 
