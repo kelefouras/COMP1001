@@ -60,10 +60,8 @@ void *print_message_function( void *ptr )
 {
      char *message; //the string to store the input string
      message = (char *) ptr; //ptr is a pointer to everything; thus, we must inform the compiler that we need a pointer to char
-     printf("%s ", message);
 
-    pthread_t self_id = pthread_self(); //get the thread ID
-    printf(" has ID %ld --- The Process ID is %d\n",self_id,getpid() );
+    printf("%s has ID %ld --- The Process ID is %d \n",message,pthread_self(),getpid() );
 
 }
 
