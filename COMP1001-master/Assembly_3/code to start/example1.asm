@@ -10,7 +10,9 @@ ExitProcess PROTO, dwExitCode: DWORD  ; Exit process prototype
 	sum DWORD 10000h	; 0x10000 is a hexadecimal number which requires
 						; 17 bits. Therefore, we need 32 bit data type 
 						; for holding its value. 
-	 
+	message BYTE "Welcome to Assembly Programming.", 0Dh, 0Ah
+			BYTE "This is an", 0Dh
+			BYTE "interesting piece of code!", 0Dh, 0Ah, 0 
 	aVariable BYTE ?
 
 .code ; code segment
