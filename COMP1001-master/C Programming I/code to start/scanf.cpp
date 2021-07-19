@@ -9,7 +9,7 @@
 #include <windows.h> //this library is needed for pause() function
 
 
-int main()
+void main()
 {
     char name[20];
 
@@ -20,6 +20,5 @@ int main()
     printf("\nYour name is %s\n", name);
 
 system("pause"); //this command does not let the output window to close
-    return 0;
 
 }

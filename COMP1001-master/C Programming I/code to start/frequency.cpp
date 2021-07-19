@@ -8,7 +8,7 @@
 #include <stdio.h> //this library is needed for printf() function
 #include <windows.h> //this library is needed for pause() function
 
-int main() {
+void main() {
 
     char string[1000];//input string
     char pattern[2]; //pattern string. The first character is the one we need to find in the string array. the second character is always zero as it is the last character of the array
@@ -28,5 +28,5 @@ int main() {
     printf("Frequency of character %c is %d\n\n", pattern[0], counter);
 
 	system("pause"); //this function prevents from closing the output window
-	return 0;
+
 }

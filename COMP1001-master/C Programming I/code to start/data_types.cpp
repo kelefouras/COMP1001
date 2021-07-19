@@ -9,7 +9,7 @@
 #include <stdio.h> //this library is needed for printf() function
 #include <windows.h> //this library is needed for pause() function
 
-int main() {
+void main() {
 	printf("Size of char: %lu\n", sizeof(char));
 	printf("Size of short: %lu\n", sizeof(short));
 	printf("Size of int: %lu\n", sizeof(int));
@@ -20,5 +20,5 @@ int main() {
 	printf("Size of long double: %lu\n", sizeof(long double));
 
 	system("pause"); //this function prevents from closing the output window
-	return 0;
+
 }
