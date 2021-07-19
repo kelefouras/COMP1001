@@ -1,26 +1,33 @@
-; exercise 2.3.1
-; A simple template for assembly programs.
+; A simple example adding two numbers.
 .386  ; Specify instruction set
 .model flat, stdcall  ; Flat memory model, std. calling convention
 .stack 4096 ; Reserve stack space
 ExitProcess PROTO, dwExitCode: DWORD  ; Exit process prototype
 
+
+
 .data ; data segment
-	; define your variables here
-	sum DWORD 10000h	; 0x10000 is a hexadecimal number which requires
-						; 17 bits. Therefore, we need 32 bit data type 
-						; for holding its value. 
-	message BYTE "Welcome to Assembly Programming.", 0Dh, 0Ah
-			BYTE "This is an", 0Dh
-			BYTE "interesting piece of code!", 0Dh, 0Ah, 0 
-	aVariable BYTE ?
+
+; define your variables here
+
+my_byte_array BYTE 1,2,3,4,5,6,7,8,9 ; this an array of bytes
+my_dword_array DWORD 1,2,3,4,5,6,7,8,9 ;this is an array of DWORDS
+my_var DWORD 99 ; this is DWORD variable
+
+; WHAT IS THE SIZE OF THE ABOVE ARRAYS IN BYTES?
 
 .code ; code segment
 
-main PROC ; main procedure
-	; write your assembly code here
 
-	INVOKE ExitProcess, 0 ; call exit function
-  
+main PROC ; main procedure
+
+; write your assembly code here
+
+lea eax, my_byte_array ; store to eax the memory address of the array
+lea ebx, my_dword_array ; store to eax the memory address of the array
+lea ecx, my_var
+
+    INVOKE ExitProcess, 0 ; call exit function
+
 main ENDP ; exit main procedure
-END main  ; stop assembling
+END main  ; stop assembling 
