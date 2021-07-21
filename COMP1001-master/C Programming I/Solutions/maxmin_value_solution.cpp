@@ -1,8 +1,14 @@
+/*
+------------------DR VASILIOS KELEFOURAS-----------------------------------------------------
+------------------COMP1001 ------------------------------------------------------------------
+------------------COMPUTER SYSTEMS MODULE-------------------------------------------------
+------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
+*/
 
 
 #include <stdio.h> //this library is needed for printf function
 #include <stdlib.h> //this library is needed for rand() function
-//#include <windows.h> //this library is needed for pause() function
+#include <windows.h> //this library is needed for pause() function
 
 
 void initialize();  //in C, functions must be declared before main()
@@ -23,7 +29,7 @@ max=find_max();
 min=find_min();
 printf("\nMAX value is %d, while MIN value is %d\n",max,min);
 
-//system("pause"); //this command does not let the output window to close
+system("pause"); //this command does not let the output window to close
 
 return 0; //normally, by returning zero, we mean that the program ended successfully. 
 }
