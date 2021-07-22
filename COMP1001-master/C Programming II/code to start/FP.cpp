@@ -106,6 +106,7 @@ unsigned short int Compare_MVM() {
 	return 0;
 }
 
+//this function becomes problematic when b is zero or when both a and b are zero
 unsigned short int equal(float a, float b) {
 	float temp = a - b;
 
@@ -114,3 +115,4 @@ unsigned short int equal(float a, float b) {
 	else
 		return 1; //wrong result
 }
+
