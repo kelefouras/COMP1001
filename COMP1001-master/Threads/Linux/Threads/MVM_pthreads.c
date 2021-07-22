@@ -5,7 +5,7 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 
-//compile with : gcc sqrt.c -o p -lpthread -lm
+//compile with : gcc MVM_pthreads.c -o p -lpthread -lm
 
 
 #include <stdio.h>      //for printf
@@ -18,45 +18,42 @@
 
 #define NUM_THREADS 4 //NUMBER OF THREADS USED. In this example, this value must perfectly divide N
 
-#define N 10000000 // INPUT SIZE
+#define N 16000 //IMPUT SIZE
 
-#define ITERATIONS 1 
+#define ITERATIONS 1
 
 #define BILLION 1000000000L
 
-double test1[N], X[N], Y[N];
+double A[N][N], test1[N], X[N], Y[N];
 
 
 void initialization();
 unsigned short int equal(double const a, double const b);
-unsigned short int Compare_sqrt();
-void *sqrt_funct(void* rank);
+unsigned short int Compare_MVM();
+void *MVM(void* rank);
 
 
-#define EPSILON 0.01
+#define EPSILON 0.0001
 
 
 int main( ) {
 
-   long int thread_num;//this variable will be used to pass the thread number to each thread
-
+   long int thread_num; //this variable will be used to pass the thread number to each thread
    pthread_t thread_handles[NUM_THREADS]; //this is an array of threads
 
    struct timespec start, end; //the timers to measure the execution time of the program
    uint64_t diff;
 
-
-   initialization(); //initialize the arrays
+   
+   initialization();
 
 	/* measure monotonic time */
    clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
 
-for (int iter=0; iter< ITERATIONS; iter++){ //This loop is needed just to get an accurate execution time. To get an accurate execution time time of a multi-threaded application, the execution time must be at least 10 secs. 
+for (int iter=0; iter< ITERATIONS; iter++){ //This loop is needed just to get an accurate execution time. To get an accurate execution time time of a multi-threaded application, the execution time must be about 1 minute (at least 10 secs). 
 
-
-   for (thread_num = 0; thread_num < NUM_THREADS; thread_num++) //for each thread do
-      pthread_create(&thread_handles[thread_num], NULL, sqrt_funct, (void*) thread_num); //create and run the thread. The thread will run the sqrt_funct(). The thread_num will be passed as input to the sqrt_funct().
-
+   for (thread_num = 0; thread_num < NUM_THREADS; thread_num++)  //for each thread do
+      pthread_create(&thread_handles[thread_num], NULL, MVM, (void*) thread_num); //create and run the thread. The thread will run the MVM(). The thread_num will be passed as input to the MVM().
 
    for (thread_num = 0; thread_num < NUM_THREADS; thread_num++) //for each thread do
       pthread_join(thread_handles[thread_num], NULL); //wait for the thread to finish
@@ -65,13 +62,12 @@ for (int iter=0; iter< ITERATIONS; iter++){ //This loop is needed just to get an
 
    clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
 
-	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec; 
-	printf("elapsed time = %llu mseconds\n", (long long unsigned int) diff/1000000);
+	diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
 
 
 
-
-   if (Compare_sqrt() == 0) //this function checks whether the result is correct or not
+   if (Compare_MVM() == 0) //this function checks whether the result is correct or not
 		printf("\n\n\r -----  output is correct -----\n\r");
    else
 		printf("\n\n\r ----- output is INcorrect -----\n\r");
@@ -85,8 +81,11 @@ for (int iter=0; iter< ITERATIONS; iter++){ //This loop is needed just to get an
 
 void initialization() {
 
-	double r = 0.1156;
+	double e = 0.1234, p = 0.7264, r = 0.11;
 
+	for (unsigned int i = 0; i != N; i++)
+		for (unsigned int j = 0; j != N; j++)
+			A[i][j] = ((i - j) % 9)+p; //initialize with some floating point values
 
 	for (unsigned int j = 0; j != N; j++) {
 		Y[j] = 0.0; //initialize the output with zero
@@ -96,12 +95,13 @@ void initialization() {
 
 }
 
-unsigned short int Compare_sqrt() {
+unsigned short int Compare_MVM() {
 
 	for (int i = 0; i < N; i++) {
-			test1[i] += sqrt ( X[i] );
+		for (int j = 0; j < N; j++) {
+			test1[i] += A[i][j] * X[j];
 		}
-	
+	}
 
 	for (int j = 0; j < N; j++)
 		if (equal(Y[j], test1[j]) == 1) {
@@ -115,7 +115,7 @@ unsigned short int Compare_sqrt() {
 unsigned short int equal(double const a, double const b) {
 	double temp = a - b;
 	//printf("\n %f  %f", a, b);
-	if (fabs(temp) < EPSILON)
+	if (fabs(temp)/b < EPSILON)
 		return 0; //success
 	else
 		return 1;
@@ -123,24 +123,23 @@ unsigned short int equal(double const a, double const b) {
 
 
 
-void *sqrt_funct (void* thread_num) { //this function will run by all the threads. SINGLE PROGRAM MULTIPLE DATA
+void *MVM (void* thread_num) { //this function will run by all the threads. SINGLE PROGRAM MULTIPLE DATA
 
-   long int my_thread_num = (long int ) thread_num; //store the input of the function to my_thread_num
+   long my_thread_num = (long) thread_num; //store the input of the function to my_thread_num
    int i, j;
 
-   int local = N/NUM_THREADS; //the number of array elements that each thread must compute their sqrt
+   int local = N/NUM_THREADS;  //the number of array elements that each thread must compute 
 
-   int starting_element = my_thread_num * local; //first array element to be computed by this thread
-   int ending_element = starting_element + local - 1; //last array element to be computed by this thread
+   int starting_row = my_thread_num * local; //first array element to be computed by this thread
+   int ending_row = starting_row + local - 1; //last array element to be computed by this thread
 
-   for (i = starting_element; i <= ending_element; i++) {   
-          Y[i] = sqrt ( X[i] );
+   for (i = starting_row; i <= ending_row; i++) {
+      for (j = 0; j < N; j++)
+          Y[i] += A[i][j] * X[j];
    }
 
    return 0;
 }  
-
-
 
 
 
