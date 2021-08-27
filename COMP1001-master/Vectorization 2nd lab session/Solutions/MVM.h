@@ -20,6 +20,6 @@ unsigned short int MVM_AVX();
 unsigned short int Compare_MVM();
 extern unsigned short int equal(float const a, float const b);
 
-#define EPSILON 0.01
+#define EPSILON 0.0001
 
 

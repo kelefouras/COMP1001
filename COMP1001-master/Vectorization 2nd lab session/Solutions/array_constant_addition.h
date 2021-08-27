@@ -22,6 +22,6 @@ unsigned short int ConstAdd_AVX();
 unsigned short int ConstAdd_AVX_all_sizes();
 unsigned short int Compare_ConstAdd();
 unsigned short int equal(float a, float b);
-#define EPSILON 0.01
+#define EPSILON 0.0001
 
 

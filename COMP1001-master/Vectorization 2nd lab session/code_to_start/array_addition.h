@@ -21,6 +21,6 @@ unsigned short int Add_AVX();
 unsigned short int Compare_Add();
 extern unsigned short int equal(float a, float b); //used extern as this is defined in array_constant_addition.h
 
-#define EPSILON 0.01
+#define EPSILON 0.0001
 
 

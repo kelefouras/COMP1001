@@ -123,7 +123,7 @@ unsigned short int Compare_ConstAdd() {
 unsigned short int equal(float a, float b) {
 	float temp = a - b;
 	//printf("\n %f  %f", a, b);
-	if (fabs(temp) < EPSILON)
+	if ( (fabs(temp)/fabs(b)) < EPSILON)
 		return 0; //success
 	else
 		return 1; //wrong result
