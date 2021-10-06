@@ -1,19 +1,18 @@
-.386					; Specify instruction set
+; A simple example adding two numbers.
+.386  ; Specify instruction set
+.model flat, stdcall  ; Flat memory model, std. calling convention
+.stack 4096 ; Reserve stack space
+ExitProcess PROTO, dwExitCode: DWORD  ; Exit process prototype
 
-.MODEL FLAT, stdcall			; Flat memory model, std calling convention
-
-.STACK 4096				; Reserve stack space
-
-ExitProcess PROTO, dwExitCode:DWORD	; Exit process prototype
-
-.DATA
-outString BYTE "The answer is: ",0 	; Output string
-answer DWORD ?			 	; Reserve 1 DWORD for the solution
+.data ; data segment
+	; define your variables here
+answer DWORD ?; Reserve 1 DWORD for the solution
 
 
-.CODE
+.code ; code segment
 
-_main PROC		; _main procedure
+main PROC ; main procedure
+	; write your assembly code here
 
 mov eax, 1 		; Value for A stored in eax
 mov ebx, 2 		; Value for B stored in ebx
@@ -27,8 +26,7 @@ sub eax, ecx 		; Subtract ecx from eax and store in eax
 
 mov answer, eax 	; Move value from eax into variable
 
-INVOKE ExitProcess, 0	; Call exit function
-
-_main ENDP		; End of the main procedure
-
-END			; Stop assembling
+	INVOKE ExitProcess, 0 ; call exit function
+  
+main ENDP ; exit main procedure
+END main  ; stop assembling
