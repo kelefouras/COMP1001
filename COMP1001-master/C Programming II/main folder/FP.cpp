@@ -110,9 +110,10 @@ unsigned short int Compare_MVM() {
 unsigned short int equal(float a, float b) {
 	float temp = a - b;
 
-	if (fabs(temp)/b < EPSILON)
+	if (fabs(temp/b) < EPSILON)
 		return 0; //success
 	else
 		return 1; //wrong result
 }
+
 
