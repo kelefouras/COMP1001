@@ -10,7 +10,7 @@
 
 #define TIMES_TO_RUN 100 //how many times the function will run
 
-void print_message(char *s, unsigned short int outcome);
+void print_message(char s[], unsigned short int outcome);
 
 //using namespace std; 
 
@@ -77,7 +77,7 @@ int main() {
 
 
 
-void print_message(char *s, unsigned short int outcome) {
+void print_message(char s[], unsigned short int outcome) {
 
 	if (outcome == 0)
 		printf("\n\n\r ----- %s output is correct -----\n\r", s);
