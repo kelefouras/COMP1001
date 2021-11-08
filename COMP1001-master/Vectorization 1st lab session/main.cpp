@@ -8,13 +8,7 @@
 #include <Windows.h>
 #include "array_constant_addition.h"
 
-#define TIMES_TO_RUN 100 //how many times the function will run
-
-void print_message(char s[], unsigned short int outcome);
-
-//using namespace std; 
-
-char message[20];
+#define TIMES_TO_RUN 1 //how many times the function will run
 
 
 int main() {
@@ -46,8 +40,8 @@ int main() {
 	//---Appropriately MODIFY the 'TIMES_TO_RUN' and the input size (defined in the appropriate header file)---
 	for (t = 0; t < TIMES_TO_RUN; t++) {
 
-		output = ConstAdd_default();
-		//output = ConstAdd_SSE();
+		//output = ConstAdd_default();
+		output = ConstAdd_SSE();
 		//output = ConstAdd_AVX();
 
 
@@ -58,13 +52,11 @@ int main() {
 	//auto finish = std::chrono::high_resolution_clock::now(); 
 	end_1 = clock(); //end the timer - ignore this for now
 
-   if (output == 2) {
-		snprintf(message, sizeof(message) - 1, "Array Constant Addition");
-		print_message(message, Compare_ConstAdd());
-	}
-	else {
-		printf("\n Error\n");
-	}
+
+	if (Compare_ConstAdd() == 0)
+		printf("\n\n\r ----- output is correct -----\n\r");
+	else
+		printf("\n\n\r -----output is INcorrect -----\n\r");
 
 	printf(" clock() method: %ldms\n", (end_1 - start_1) / (CLOCKS_PER_SEC / 1000));
 	//std::chrono::duration<double> elapsed = finish - start;
@@ -77,13 +69,5 @@ int main() {
 
 
 
-void print_message(char s[], unsigned short int outcome) {
-
-	if (outcome == 0)
-		printf("\n\n\r ----- %s output is correct -----\n\r", s);
-	else
-		printf("\n\n\r -----%s output is INcorrect -----\n\r", s);
-
-}
 
 
