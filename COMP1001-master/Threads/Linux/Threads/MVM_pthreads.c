@@ -5,7 +5,7 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 
-//compile with : gcc MVM_pthreads.c -o p -lpthread -lm
+//compile with : gcc MVM_pthreads.c -o p -lpthread -lm -O3
 
 
 #include <stdio.h>      //for printf
@@ -16,7 +16,7 @@
 #include <stdint.h>	/* for uint64 definition */
 
 
-#define NUM_THREADS 4 //NUMBER OF THREADS USED. In this example, this value must perfectly divide N
+#define NUM_THREADS 4 //NUMBER OF THREADS USED. 
 
 #define N 16000 //IMPUT SIZE
 
@@ -33,7 +33,7 @@ unsigned short int Compare_MVM();
 void *MVM(void* rank);
 
 
-#define EPSILON 0.0001
+#define EPSILON 0.00001
 
 
 int main( ) {
@@ -115,7 +115,7 @@ unsigned short int Compare_MVM() {
 unsigned short int equal(double const a, double const b) {
 	double temp = a - b;
 	//printf("\n %f  %f", a, b);
-	if (fabs(temp)/b < EPSILON)
+	if (fabs(temp/b) < EPSILON)
 		return 0; //success
 	else
 		return 1;
@@ -133,6 +133,10 @@ void *MVM (void* thread_num) { //this function will run by all the threads. SING
    int starting_row = my_thread_num * local; //first array element to be computed by this thread
    int ending_row = starting_row + local - 1; //last array element to be computed by this thread
 
+   if (my_thread_num == NUM_THREADS -1) //if you are the last thread
+     ending_row=N-1;
+     
+     
    for (i = starting_row; i <= ending_row; i++) {
       for (j = 0; j < N; j++)
           Y[i] += A[i][j] * X[j];

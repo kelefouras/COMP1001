@@ -5,7 +5,7 @@
 ------------------UNIVERSITY OF PLYMOUTH, SCHOOL OF ENGINEERING, COMPUTING AND MATHEMATICS---
 */
 
-//compile with : gcc sqrt.c -o p -lpthread -lm -O3
+//compile with : gcc sqrt_openmp.c -o p -fopenmp -lm -O3
 
 
 #include <stdio.h>      //for printf
@@ -15,8 +15,6 @@
 #include <time.h>	/* for clock_gettime */
 #include <stdint.h>	/* for uint64 definition */
 
-
-#define NUM_THREADS 4 //NUMBER OF THREADS USED. 
 
 #define N 10000000 // INPUT SIZE
 
@@ -30,7 +28,7 @@ double test1[N], X[N], Y[N];
 void initialization();
 unsigned short int equal(double const a, double const b);
 unsigned short int Compare_sqrt();
-void *sqrt_funct(void* rank);
+void sqrt_parallel (); //this is a parallel implementation of sqrt() by using OpenMP framework. 
 
 
 #define EPSILON 0.00001
@@ -38,9 +36,6 @@ void *sqrt_funct(void* rank);
 
 int main( ) {
 
-   long int thread_num;//this variable will be used to pass the thread number to each thread
-
-   pthread_t thread_handles[NUM_THREADS]; //this is an array of threads
 
    struct timespec start, end; //the timers to measure the execution time of the program
    uint64_t diff;
@@ -54,12 +49,7 @@ int main( ) {
 for (int iter=0; iter< ITERATIONS; iter++){ //This loop is needed just to get an accurate execution time. To get an accurate execution time time of a multi-threaded application, the execution time must be about a minute (at least 10 secs). 
 
 
-   for (thread_num = 0; thread_num < NUM_THREADS; thread_num++) //for each thread do
-      pthread_create(&thread_handles[thread_num], NULL, sqrt_funct, (void*) thread_num); //create and run the thread. The thread will run the sqrt_funct(). The thread_num will be passed as input to the sqrt_funct().
-
-
-   for (thread_num = 0; thread_num < NUM_THREADS; thread_num++) //for each thread do
-      pthread_join(thread_handles[thread_num], NULL); //wait for the thread to finish
+sqrt_parallel ();
 
 }
 
@@ -122,25 +112,16 @@ unsigned short int equal(double const a, double const b) {
 }
 
 
+//this is a parallel implementation of sqrt() by using OpenMP framework. The OpenMP runtime automatically selects the right number of threads (we can specify this number though, if we want). 
+void sqrt_parallel () { 
 
-void *sqrt_funct (void* thread_num) { //this function will run by all the threads. SINGLE PROGRAM MULTIPLE DATA
+int i;
 
-   long int my_thread_num = (long int ) thread_num; //store the input of the function to my_thread_num
-   int i, j;
-
-   int local = N/NUM_THREADS; //the number of array elements that each thread must compute their sqrt
-
-   int starting_element = my_thread_num * local; //first array element to be computed by this thread
-   int ending_element = starting_element + local - 1; //last array element to be computed by this thread
-   
-   if (my_thread_num == NUM_THREADS -1) //if you are the last thread
-     ending_element=N-1;
-
-   for (i = starting_element; i <= ending_element; i++) {   
-          Y[i] = sqrt ( X[i] );
-   }
-
-   return 0;
+       #pragma omp parallel for
+	for (i = 0; i < N; i++) {
+	  Y[i] += sqrt ( X[i] );
+		}
+		
 }  
 
 
