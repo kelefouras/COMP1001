@@ -59,20 +59,20 @@ int main() {
 
 void initialization() {
 
-	float e = 0.1234, p = 0.7264, r = 0.11;
+	float e = 0.1234f, p = 0.7264f, r = 0.11f;
 
 	//gemver
 	for (int i = 0; i < P; i++)
 		for (int j = 0; j < P; j++) {
-			A2[i][j] = 0.0;
-			test4[i][j] = 0.0;
+			A2[i][j] = 0.0f;
+			test4[i][j] = 0.0f;
 		}
 
 	for (int j = 0; j < P; j++) {
 		u1[j] = e + (j % 9);
-		v1[j] = e - (j % 9) + 1.1;
-		u2[j] = p + (j % 9) - 1.2;
-		v2[j] = p - (j % 9) + 2.2;
+		v1[j] = e - (j % 9) + 1.1f;
+		u2[j] = p + (j % 9) - 1.2f;
+		v2[j] = p - (j % 9) + 2.2f;
 	}
 
 

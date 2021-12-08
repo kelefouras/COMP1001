@@ -51,13 +51,13 @@ int main() {
 
 void init() {
 
-	float e = 0.1234, p = 0.7264, r = 0.11;
+	float e = 0.1234f, p = 0.7264f, r = 0.11f;
 
 	//MMM
 	for (unsigned int i = 0; i < N; i++) { //printf("\n");
 		for (unsigned int j = 0; j < N; j++) {
-			C[i][j] = 0.0;
-			test[i][j] = 0.0;
+			C[i][j] = 0.0f;
+			test[i][j] = 0.0f;
 			A[i][j] = (j % 9) + p; //printf(" %3.1f",A[i][j]);
 			B[i][j] = (j % 7) - p; //printf(" %3.1f",B[i][j]);
 		}
