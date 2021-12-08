@@ -77,15 +77,15 @@ void AVX() {
 	float temp;
 
 
-	for (j = 0; j != N; j++)
-		for (k = 0; k != N; k++) {
+	for (j = 0; j < N; j++)
+		for (k = 0; k < N; k++) {
 			Btranspose[k][j] = B[j][k];
 		}
 
-	for (i = 0; i != N; i++)
-		for (j = 0; j != N; j++) {
+	for (i = 0; i < N; i++)
+		for (j = 0; j < N; j++) {
 			ymm0 = _mm256_setzero_ps();
-			for (k = 0; k != ((N / 8) * 8); k += 8) {
+			for (k = 0; k < N; k += 8) {
 				ymm1 = _mm256_load_ps(&A[i][k]);
 				ymm2 = _mm256_load_ps(&Btranspose[j][k]);
 				ymm0 = _mm256_fmadd_ps(ymm1, ymm2, ymm0);
@@ -98,9 +98,7 @@ void AVX() {
 			xmm2 = _mm256_extractf128_ps(ymm0, 0);
 			_mm_store_ss(&C[i][j], xmm2);
 
-			for (; k < N; k++) {
-				C[i][j] += A[i][k] * Btranspose[j][k];
-			}
 		}
 
 }
+
