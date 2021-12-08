@@ -17,7 +17,7 @@ void MVM();
 
 
 #define N 256 //input size
-__declspec(align(64)) float Y[N], X[N],A[N*N],test[N];
+float Y[N], X[N],A[N*N],test[N];
 
 #define TIMES_TO_RUN 1 //how many times the function will run
 
@@ -47,7 +47,7 @@ int main() {
 
 void init() {
 
-	float e = 0.1234, p = 0.7264, r = 0.11;
+	float e = 0.1234f, p = 0.7264f, r = 0.11f;
 
 	//MVM
 	for (unsigned int i = 0; i < N; i++)
@@ -55,8 +55,8 @@ void init() {
 			A[N*i+j] = ((i - j) % 9) + p;
 
 	for (unsigned int j = 0; j < N; j++) {
-		Y[j] = 0.0;
-		test[j] = 0.0;
+		Y[j] = 0.0f;
+		test[j] = 0.0f;
 		X[j] = (j % 7) + r;
 	}
 }
