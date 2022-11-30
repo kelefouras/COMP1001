@@ -8,6 +8,7 @@
 
 #include<stdio.h> 
 #include <stdlib.h> //for malloc
+#include <windows.h>  
   
 #define N 4000000000
 

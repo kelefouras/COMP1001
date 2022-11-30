@@ -42,7 +42,7 @@ int main()
 
     printf("\nThe number of elements is: %d\n", n); 
    
-    ptr = malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
+    ptr = (int*) malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
   
    
     

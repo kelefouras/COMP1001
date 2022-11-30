@@ -8,6 +8,7 @@
 
 #include <stdio.h>   //needed for printf
 #include <stdlib.h> //needed for malloc, calloc, realloc, free
+#include <windows.h>  
   
 int main() 
 { 

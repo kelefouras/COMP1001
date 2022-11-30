@@ -7,6 +7,7 @@
 
 
 #include<stdio.h> 
+#include <windows.h>  
   
 #define N 2000
 

@@ -9,6 +9,7 @@
 
 #include <stdio.h> 
 #include <stdlib.h> //this library allows for malloc to run
+#include <windows.h>  
  
 void init(int *ptr, int n){
 
@@ -41,7 +42,7 @@ int main()
 
     printf("\nThe number of elements is: %d\n", n); 
    
-    ptr = malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
+    ptr = (int*) malloc(n * sizeof(int)); // Dynamically allocate memory using malloc() 
   
    
     

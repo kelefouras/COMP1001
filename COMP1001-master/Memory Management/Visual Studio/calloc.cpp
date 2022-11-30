@@ -7,7 +7,7 @@
 
 #include <stdio.h> 
 #include <stdlib.h> //this library allows for malloc to run
-
+#include <windows.h>  
 
 int main()
 {

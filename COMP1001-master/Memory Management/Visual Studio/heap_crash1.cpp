@@ -9,6 +9,7 @@
 
 #include<stdio.h> 
 #include <stdlib.h> //for malloc
+#include <windows.h>  
   
 #define N 1000000000
 
