@@ -53,6 +53,31 @@ unsigned short int MVM_SSE() {
 	return 1;
 }
 
+unsigned short int MVM_SSE_without_fmadd(){
+
+	__m128 num0, num1, num2, num3, num4, num5, num6;
+
+	for (int i = 0; i < M3; i++) {
+
+		num3 = _mm_setzero_ps();
+		for (int j = 0; j < M3; j += 4) { //IMPORTANT: M MUST BE A MULTIPLE OF 4, OTHERWISE IT DOES NOT WORK
+
+			num0 = _mm_load_ps(&A1[i][j]);
+			num1 = _mm_load_ps(&X[j]);
+			num4 = _mm_mul_ps(num0, num1);
+			num3 = _mm_add_ps(num3, num4);
+		}
+
+		num4 = _mm_hadd_ps(num3, num3);
+		num4 = _mm_hadd_ps(num4, num4);
+
+		_mm_store_ss(&Y[i], num4);
+	}
+
+	return 1;
+}
+
+
 unsigned short int MVM_AVX() {
 
 	__m256 ymm0, ymm1, ymm2, ymm3, ymm4, ymm5, ymm6, num0, num1, num2, num3, num4, num5;
@@ -79,6 +104,35 @@ unsigned short int MVM_AVX() {
 
 	return 1;
 }
+
+unsigned short int MVM_AVX_without_fmadd() {
+
+	__m256 ymm0, ymm1, ymm2, ymm3, ymm4, ymm5, ymm6, num0, num1, num2, num3, num4, num5;
+	__m128 xmm1, xmm2;
+
+	for (int i = 0; i < M3; i++) {
+		num1 = _mm256_setzero_ps();
+
+		for (int j = 0; j < M3; j += 8) {//IMPORTANT: M MUST BE A MULTIPLE OF 8, OTHERWISE IT DOES NOT WORK
+
+			num5 = _mm256_load_ps(&X[j]);
+			num0 = _mm256_load_ps(&A1[i][j]);
+			num2 = _mm256_mul_ps(num0, num5);
+			num1 = _mm256_add_ps(num1, num2);
+		}
+
+
+		ymm2 = _mm256_permute2f128_ps(num1, num1, 1);
+		num1 = _mm256_add_ps(num1, ymm2);
+		num1 = _mm256_hadd_ps(num1, num1);
+		num1 = _mm256_hadd_ps(num1, num1);
+		xmm2 = _mm256_extractf128_ps(num1, 0);
+		_mm_store_ss(&Y[i], xmm2);
+	}
+
+	return 1;
+}
+
 
 unsigned short int Compare_MVM() {
 
