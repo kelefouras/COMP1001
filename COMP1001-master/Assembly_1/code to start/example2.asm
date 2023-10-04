@@ -30,6 +30,8 @@ main PROC ; main procedure
 	; The resulting answer will be -4.
 	; This means that the signed integer will be produced in two's complement.
 	; This is why the value stored in eax will be FFFFFFC.
+
+;test
   
 main ENDP ; exit main procedure
 END main  ; stop assembling
