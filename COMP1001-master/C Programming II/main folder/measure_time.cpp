@@ -8,7 +8,7 @@
 #include <stdio.h> //this library is needed for printf function
 #include <stdlib.h> //this library is needed for rand() function
 #include <windows.h> //this library is needed for pause() function
-#include <time.h> //this library is needed for clock() function
+#include <omp.h> //this library is needed for the timer
 
 
 void initialize();  //in C, functions must be declared before main()
@@ -24,7 +24,7 @@ int A[N];
 int main() {
 
 	//define the timers measuring execution time
-	clock_t start_1, end_1; //ignore this for  now
+	double start_1, end_1; 
 
 	int max, min;
 
@@ -33,16 +33,16 @@ int main() {
 	//print();
 
 
-	start_1 = clock(); //start the timer (THIS IS NOT A VERY ACCURATE TIMER) - ignore this for now
+	start_1 = omp_get_wtime(); //start the timer 
 
 	for (int i=0;i<TIMES_TO_RUN;i++)//this loop is needed to get an accurate ex.time value
 	 max = find_max();
 
-	end_1 = clock(); //end the timer - ignore this for now
+	end_1 = omp_get_wtime(); //end the timer 
 
 	min = find_min();
 	printf("\nMAX value is %d, while MIN value is %d\n", max, min);
-	printf(" clock() method: %ldms\n", (end_1 - start_1) / (CLOCKS_PER_SEC / 1000));//print the ex.time
+	printf(" Time in seconds is %f\n", end_1 - start_1 );//print the ex.time
 
 	system("pause"); //this command does not let the output window to close
 
