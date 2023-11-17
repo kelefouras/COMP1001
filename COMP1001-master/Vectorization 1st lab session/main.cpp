@@ -7,6 +7,7 @@
 
 #include <Windows.h>
 #include "array_constant_addition.h"
+#include <omp.h> //this library is needed for the timer
 
 #define TIMES_TO_RUN 1 //how many times the function will run
 
@@ -15,6 +16,10 @@ int main() {
 
 	unsigned short int output;
 	int t;
+	
+	//define the timers measuring execution time
+	double start_1, end_1; 
+	
 	//the following command pins the current process to the 1st core
 	//otherwise, the OS tongles this process between different cores
 	BOOL success = SetProcessAffinityMask(GetCurrentProcess(), 1);
@@ -28,9 +33,7 @@ int main() {
 	//initialize the arrays
 	initialization_ConstAdd();
 
-	//define the timers measuring execution time
-	clock_t start_1, end_1; //ignore this for  now
-	start_1 = clock(); //start the timer (THIS IS NOT A VERY ACCURATE TIMER) - ignore this for now
+	start_1 = omp_get_wtime(); //start the timer 
 
 	//auto start = std::chrono::high_resolution_clock::now(); //ACCURATE timer provided in C++ only
 
@@ -50,7 +53,7 @@ int main() {
 
 
 	//auto finish = std::chrono::high_resolution_clock::now(); 
-	end_1 = clock(); //end the timer - ignore this for now
+	end_1 = omp_get_wtime(); //start the timer 
 
 
 	if (Compare_ConstAdd() == 0)
@@ -58,7 +61,7 @@ int main() {
 	else
 		printf("\n\n\r -----output is INcorrect -----\n\r");
 
-	printf(" clock() method: %ldms\n", (end_1 - start_1) / (CLOCKS_PER_SEC / 1000));
+	printf(" Time in seconds is %f\n", end_1 - start_1 );//print the ex.time
 	//std::chrono::duration<double> elapsed = finish - start;
 	//std::cout << "Elapsed time: " << elapsed.count() << " s\n";
 
