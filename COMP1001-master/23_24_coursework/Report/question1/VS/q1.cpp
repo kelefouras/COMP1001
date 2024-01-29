@@ -29,7 +29,7 @@ void initialize();
 void routine1(float alpha, float beta);
 void routine2(float alpha, float beta);
 
-__declspec(align(64)) float  y[M], z[M] ;
+__declspec(align(64)) float  y[M], z[M];
 __declspec(align(64)) float A[N][N], x[N], w[N];
 
 int main() {
@@ -88,31 +88,42 @@ void initialize() {
 
 }
 
-
+#include <emmintrin.h>
 
 
 void routine1(float alpha, float beta) {
 
-    unsigned int i;
+    const __m128 alpha_vec = _mm_set1_ps(alpha);
+    const __m128 beta_vec = _mm_set1_ps(beta);
 
+    for (unsigned int i = 0; i < M; i += 4) {
+        __m128 y_vec = _mm_loadu_ps(&y[i]);
+        __m128 z_vec = _mm_loadu_ps(&z[i]);
 
-    for (i = 0; i < M; i++)
-        y[i] = alpha * y[i] + beta * z[i];
+        y_vec = _mm_add_ps(_mm_mul_ps(alpha_vec, y_vec), _mm_mul_ps(beta_vec, z_vec));
 
+        _mm_storeu_ps(&y[i], y_vec);
+    }
 }
+
+
 
 void routine2(float alpha, float beta) {
 
-    unsigned int i, j;
+    const __m128 alpha_vec = _mm_set1_ps(alpha);
+    const __m128 beta_vec = _mm_set1_ps(beta);
 
+    for (unsigned int i = 0; i < N; ++i) {
+        __m128 w_vec = _mm_loadu_ps(&w[i]);
 
-    for (i = 0; i < N; i++)
-        for (j = 0; j < N; j++)
-            w[i] = w[i] - beta + alpha * A[i][j] * x[j];
+        for (unsigned int j = 0; j < N; j += 4) {
+            __m128 A_vec = _mm_loadu_ps(&A[i][j]);
+            __m128 x_vec = _mm_loadu_ps(&x[j]);
 
+            w_vec = _mm_sub_ps(w_vec, beta_vec);
+            w_vec = _mm_add_ps(w_vec, _mm_mul_ps(_mm_mul_ps(alpha_vec, A_vec), x_vec));
+        }
 
+        _mm_storeu_ps(&w[i], w_vec);
+    }
 }
-
-
-
-
