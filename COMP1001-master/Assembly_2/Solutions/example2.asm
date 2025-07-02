@@ -6,22 +6,22 @@ ExitProcess PROTO, dwExitCode: DWORD  ; Exit process prototype
 
 .data ; data segment
 	; define your variables here
-	power WORD 2200
-	volt WORD 220
-	zero WORD 0
-	quotient WORD 0
-	remainder WORD 0
+	power DWORD 2200
+	volt DWORD 220
+	zero DWORD 0
+	quotient DWORD 0
+	remainder DWORD 0
 
 .code ; code segment
 	
 main PROC ; main procedure
 	; write your assembly code here
-	mov dx, zero
-	mov ax, power
-	mov cx, volt
-	div cx
-	mov quotient, ax
-	mov remainder, dx
+	mov edx, zero
+	mov eax, power
+	mov ecx, volt
+	div ecx
+	mov quotient, eax
+	mov remainder, edx
 
 	INVOKE ExitProcess, 0 ; call exit function
   
