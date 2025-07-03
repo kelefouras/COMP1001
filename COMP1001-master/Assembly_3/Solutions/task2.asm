@@ -12,25 +12,24 @@ ExitProcess PROTO, dwExitCode: DWORD  ; Exit process prototype
 
 main PROC ; main procedure
 	; write your assembly code here
-	lea ebx, array  ; load address of the first element
 	mov ecx, 8  ; load multiplier
-	mov eax, [ebx + TYPE array * 0] ; load multiplicand
+	mov eax, [array + TYPE array * 0] ; load multiplicand
 	mul ecx ; multiply
-	mov [ebx + TYPE array * 0], eax ; get the product and put it in the array
+	mov [array + TYPE array * 0], eax ; get the product and put it in the array
                                   ; (ignoring top bytes as they will be zero in this case)
   ; repeat the process for the rest of the elements.
   ; 2nd element
-	mov eax, [ebx + TYPE array * 1]
+	mov eax, [array + TYPE array * 1]
 	mul ecx
-	mov [ebx + TYPE array * 1], eax
+	mov [array + TYPE array * 1], eax
   ; 3rd element
-	mov eax, [ebx + TYPE array * 2]
+	mov eax, [array + TYPE array * 2]
 	mul ecx
-	mov [ebx + TYPE array * 2], eax
+	mov [array + TYPE array * 2], eax
   ; 4th element
-	mov eax, [ebx + TYPE array * 3]
+	mov eax, [array + TYPE array * 3]
 	mul ecx
-	mov [ebx + TYPE array * 3], eax
+	mov [array + TYPE array * 3], eax
 	INVOKE ExitProcess, 0 ; call exit function
   
 main ENDP ; exit main procedure
