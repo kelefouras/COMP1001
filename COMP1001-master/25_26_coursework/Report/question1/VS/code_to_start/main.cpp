@@ -24,12 +24,12 @@ int getint(FILE *fp);
 
 
 //CRITICAL POINT: images' paths - You need to change these paths
-#define IN "C:\\Users\\vboxuser\\source\\repos\\image_processing\\image_processing\\input_images\\a1.pgm"
-#define OUT "C:\\Users\\vboxuser\\source\\repos\\image_processing\\image_processing\\output_images\\edge_detection1.pgm"
+char IN[] = "C:\\Users\\vboxuser\\source\\repos\\image_processing\\image_processing\\input_images\\a15.pgm";
+char OUT[] = "C:\\Users\\vboxuser\\source\\repos\\image_processing\\image_processing\\output_images\\edge_detection15.pgm";
 
 //IMAGE DIMENSIONS
-#define M 512  //cols
-#define N 512  //rows
+#define M 475  //cols
+#define N 460  //rows
 
 
 //CRITICAL POINT:these arrays are defined statically. Consider creating these arrays dynamically instead.
@@ -99,7 +99,7 @@ void edge_detection( ){
 
 
 
-void read_image(const char* filename)
+void read_image( char* filename)
 {
 
 	int c;
@@ -146,7 +146,7 @@ void read_image(const char* filename)
 
 
 
-void write_image2(const char* filename)
+void write_image2( char* filename)
 {
 
 	FILE* foutput;
@@ -180,7 +180,7 @@ void write_image2(const char* filename)
 
 
 
-void openfile(const char* filename, FILE** finput)
+void openfile(char* filename, FILE** finput)
 {
 	int x0, y0, x , aa;
 
